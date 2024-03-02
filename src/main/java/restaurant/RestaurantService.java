@@ -1,5 +1,6 @@
 package restaurant;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class RestaurantService {
         System.out.println("Type \"3\", if you want to see all restaurants");
         System.out.println("Type \"4\", if you want to see all meals in a particular restaurant");
         System.out.println("Type \"5\", if you want to change the restaurant name");
+        System.out.println("Type \"DUMP\", to store restaurants into a JSON file");
     }
 
     public void runRestaurantManager() {
@@ -38,10 +40,16 @@ public class RestaurantService {
                     case "4" -> printAllMealsInRestaurant();
                     case "5" -> changeRestaurantName();
                     case "6" -> printAppMenu();
+                    case "DUMP" -> dumpRestaurantsToJson();
                     default -> System.out.println("Invalid option, please try again");
                 }
             }
         }
+    }
+
+    private void dumpRestaurantsToJson() {
+        JSONGenerator.generateJSON(new ArrayList<>(restaurantRepository.restaurants));
+        System.out.println("Restaurants dumped to JSON file.");
     }
 
     private UUID createRestaurant() {

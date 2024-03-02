@@ -15,6 +15,14 @@ public class Meal {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return name + ", " + price + "pln";
