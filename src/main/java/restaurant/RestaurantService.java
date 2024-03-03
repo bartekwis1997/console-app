@@ -48,7 +48,7 @@ public class RestaurantService {
     }
 
     private void dumpRestaurantsToJson() {
-        JSONGenerator.generateJSON(new ArrayList<>(restaurantRepository.restaurants));
+        JSONGenerator.generateJSON(new ArrayList<>(restaurantRepository.restaurants), "restaurant.json");
         System.out.println("Restaurants dumped to JSON file.");
     }
 
