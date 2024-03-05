@@ -11,9 +11,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class JSONGenerator {
-    private static final ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-
-    public static void generateJSON(List<Restaurant> restaurants, String filePath) {
+    private final ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private JSONGenerator jsonGenerator;
+    
+    public void generateJSON(List<Restaurant> restaurants, String filePath) {
         if (restaurants == null || restaurants.isEmpty()) {
             System.err.println("No restaurants provided.");
             return;
@@ -63,7 +64,7 @@ public class JSONGenerator {
         }
     }
 
-    private static void updateRestaurantWithMeals(ObjectNode restaurantNode, List<Meal> meals) {
+    private void updateRestaurantWithMeals(ObjectNode restaurantNode, List<Meal> meals) {
         ArrayNode mealsArray = restaurantNode.withArray("meals");
         for (Meal meal : meals) {
             ObjectNode mealNode = objectMapper.createObjectNode();
@@ -73,7 +74,7 @@ public class JSONGenerator {
         }
     }
 
-    private static void addRestaurantToJSON(ArrayNode restaurantArray, Restaurant restaurant) {
+    private void addRestaurantToJSON(ArrayNode restaurantArray, Restaurant restaurant) {
         ObjectNode restaurantNode = objectMapper.createObjectNode();
         restaurantNode.put("id", restaurant.id.toString());
         restaurantNode.put("name", restaurant.name);

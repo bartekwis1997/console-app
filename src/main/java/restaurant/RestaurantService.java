@@ -8,10 +8,12 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final Scanner scanner;
+    private final JSONGenerator jsonGenerator;
 
-    public RestaurantService(RestaurantRepository restaurantRepository, Scanner scanner) {
+    public RestaurantService(RestaurantRepository restaurantRepository, Scanner scanner, JSONGenerator jsonGenerator) {
         this.restaurantRepository = restaurantRepository;
         this.scanner = scanner;
+        this.jsonGenerator = jsonGenerator;
     }
 
     private void printAppMenu() {
@@ -48,7 +50,7 @@ public class RestaurantService {
     }
 
     private void dumpRestaurantsToJson() {
-        JSONGenerator.generateJSON(new ArrayList<>(restaurantRepository.restaurants), "src/main/java/restaurant/resources/restaurants.json");
+        jsonGenerator.generateJSON(new ArrayList<>(restaurantRepository.restaurants), "src/main/java/restaurant/resources/restaurants.json");
         System.out.println("Restaurants dumped to JSON file.");
     }
 
