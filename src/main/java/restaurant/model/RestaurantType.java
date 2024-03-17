@@ -1,14 +1,14 @@
-package restaurant;
+package restaurant.model;
 
 import java.util.Scanner;
 
-enum RestaurantType {
+public enum RestaurantType {
     ASIAN,
     ITALIAN,
     FRENCH,
     AMERICAN,
     TURKISH;
-    
+
     public static RestaurantType getValidInput(Scanner scanner) {
         String input = scanner.nextLine().toUpperCase();
         while (true)

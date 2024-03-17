@@ -1,6 +1,12 @@
-package restaurant;
+package restaurant.repository;
 
-import java.util.*;
+import restaurant.model.Restaurant;
+import restaurant.model.RestaurantType;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 
 public class RestaurantRepository {
     public final Set<Restaurant> restaurants;
@@ -16,8 +22,9 @@ public class RestaurantRepository {
         restaurants.add(new Restaurant(UUID.randomUUID(), "Meat Burger", "Lipowa 31b/1, Gdańsk 18-111", RestaurantType.AMERICAN));
     }
 
-    public void create(Restaurant restaurant) {
+    public Restaurant create(Restaurant restaurant) {
         restaurants.add(restaurant);
+        return restaurant;
     }
 
     public Restaurant getById(UUID restaurantId) {
