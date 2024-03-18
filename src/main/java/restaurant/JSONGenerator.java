@@ -1,12 +1,10 @@
-package restaurant.util;
+package restaurant;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import restaurant.model.Meal;
-import restaurant.model.Restaurant;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +44,7 @@ public class JSONGenerator {
             }
 
             // Construct the file path
-            String filePath = "restaurants.json";
+            String filePath = "src/main/resources/restaurants.json";
 
             // Write updated JSON data back to the file
             objectMapper.writeValue(new File(filePath), rootNode);

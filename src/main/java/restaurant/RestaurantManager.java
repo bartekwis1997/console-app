@@ -1,10 +1,9 @@
-package restaurant.logic;
-
-import restaurant.io.ConsolePrinter;
+package restaurant;
 
 import java.util.Scanner;
 
 public class RestaurantManager {
+    
     private final RestaurantProcessor restaurantProcessor;
     private final ConsolePrinter consolePrinter;
     private final Scanner scanner;
@@ -16,23 +15,23 @@ public class RestaurantManager {
     }
 
     public void runRestaurantManager() {
-        consolePrinter.print(consolePrinter.printAppMenu());
+        System.out.println(consolePrinter.printAppMenu());
         while (true) {
-            consolePrinter.print("Please choose an option (type \"6\" to see full menu again):");
+            System.out.println("Please choose an option (type \"6\" to see full menu again):");
             String input = scanner.nextLine();
             if (input.equals("exit")) {
                 scanner.close();
                 break;
             } else {
                 switch (input) {
-                    case "1" -> restaurantProcessor.createRestaurant();
+                    case "1" -> System.out.println(restaurantProcessor.createRestaurant());
                     case "2" -> restaurantProcessor.addMealToRestaurant();
                     case "3" -> consolePrinter.printAllRestaurants();
                     case "4" -> restaurantProcessor.getAllMealsInRestaurant();
                     case "5" -> restaurantProcessor.changeRestaurantName();
-                    case "6" -> consolePrinter.print(consolePrinter.printAppMenu());
+                    case "6" -> System.out.println(consolePrinter.printAppMenu());
                     case "DUMP" -> restaurantProcessor.dumpRestaurantsToJson();
-                    default -> consolePrinter.print("Invalid option, please try again");
+                    default -> System.out.println("Invalid option, please try again");
                 }
             }
         }

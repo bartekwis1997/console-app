@@ -1,7 +1,4 @@
-package restaurant.repository;
-
-import restaurant.model.Restaurant;
-import restaurant.model.RestaurantType;
+package restaurant;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +7,10 @@ import java.util.UUID;
 
 public class RestaurantRepository {
     public final Set<Restaurant> restaurants;
+
+    public Set<Restaurant> getRestaurants() {
+        return restaurants;
+    }
 
     public RestaurantRepository(Set<Restaurant> restaurants) {
         this.restaurants = restaurants;

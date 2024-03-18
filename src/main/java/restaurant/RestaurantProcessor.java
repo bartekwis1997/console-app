@@ -1,19 +1,13 @@
-package restaurant.logic;
-
-import restaurant.io.ConsolePrinter;
-import restaurant.util.JSONGenerator;
-import restaurant.repository.RestaurantRepository;
-import restaurant.model.Meal;
-import restaurant.model.Restaurant;
-import restaurant.model.RestaurantType;
+package restaurant;
 
 import java.util.*;
 
 public class RestaurantProcessor {
-    ConsolePrinter consolePrinter;
-    Scanner scanner;
-    RestaurantRepository restaurantRepository;
-    JSONGenerator jsonGenerator;
+
+    private final ConsolePrinter consolePrinter;
+    private final Scanner scanner;
+    private final RestaurantRepository restaurantRepository;
+    private final JSONGenerator jsonGenerator;
 
     public RestaurantProcessor(ConsolePrinter consolePrinter, Scanner scanner, RestaurantRepository restaurantRepository, JSONGenerator jsonGenerator) {
         this.consolePrinter = consolePrinter;
@@ -22,51 +16,50 @@ public class RestaurantProcessor {
         this.jsonGenerator = jsonGenerator;
     }
 
-    List<Restaurant> dumpRestaurantsToJson() {
-        List<Restaurant> dumpedRestaurants = new ArrayList<>(restaurantRepository.restaurants);
+    public List<Restaurant> dumpRestaurantsToJson() {
+        List<Restaurant> dumpedRestaurants = new ArrayList<>(restaurantRepository.getRestaurants());
         jsonGenerator.generateJSON(dumpedRestaurants);
-        consolePrinter.print("Restaurants dumped to JSON file.");
+        System.out.println(("Restaurants dumped to JSON file."));
         return dumpedRestaurants;
     }
 
-    UUID createRestaurant() {
-        UUID restaurantUuid = UUID.randomUUID();
+    public String createRestaurant() {
+        UUID restaurantId = UUID.randomUUID();
 
-        consolePrinter.print("Please type restaurant name:");
+        System.out.println("Please type restaurant name:");
         String restaurantName = scanner.nextLine();
 
-        consolePrinter.print("Please type restaurant address");
+        System.out.println("Please type restaurant address");
         String restaurantAddress = scanner.nextLine();
 
-        consolePrinter.print("Please type restaurant type (ASIAN, ITALIAN, FRENCH, AMERICAN):");
+        System.out.println("Please type restaurant type (ASIAN, ITALIAN, FRENCH, AMERICAN):");
         RestaurantType restaurantType = RestaurantType.getValidInput(scanner);
 
-        restaurantRepository.create(new Restaurant(restaurantUuid, restaurantName, restaurantAddress, restaurantType));
-        consolePrinter.print("Restaurant have been added");
+        restaurantRepository.create(new Restaurant(restaurantId, restaurantName, restaurantAddress, restaurantType));
 
-        return restaurantUuid;
+        return String.format("Restaurant with ID %s has been created", restaurantId);
     }
 
-    Meal addMealToRestaurant() {
-        consolePrinter.print("Please type restaurant ID, to which you would like to add a meal\n(below you can see all restaurants):");
+    public Meal addMealToRestaurant() {
+        System.out.println("Please type restaurant ID, to which you would like to add a meal\n(below you can see all restaurants):");
         consolePrinter.printAllRestaurants();
 
         UUID restaurantId = getValidRestaurantId();
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
 
         if (restaurant != null) {
-            consolePrinter.print("Please type meal name:");
+            System.out.println("Please type meal name:");
             final var mealName = scanner.nextLine();
 
-            consolePrinter.print("Please type meal price:");
+            System.out.println("Please type meal price:");
             final var mealPrice = getValidMealPrice(scanner);
 
             Meal meal = new Meal(mealName, mealPrice, restaurantId);
             restaurant.meals.add(meal);
-            consolePrinter.print("Meal added successfully");
+            System.out.println("Meal added successfully");
             return meal;
         } else {
-            consolePrinter.print("Restaurant not found.");
+            System.out.println("Restaurant not found.");
             return null;
         }
     }
@@ -74,30 +67,30 @@ public class RestaurantProcessor {
     public Set<Meal> getAllMealsInRestaurant() {
         Set<Meal> meals = new HashSet<>();
 
-        consolePrinter.print("Enter restaurant ID to see its meals\n(below you can see all restaurants):");
+        System.out.println("Enter restaurant ID to see its meals\n(below you can see all restaurants):");
         consolePrinter.printAllRestaurants();
 
         UUID restaurantId = getValidRestaurantId();
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
 
         if (restaurant.meals.isEmpty()) {
-            consolePrinter.print("There are no meals in this restaurant");
+            System.out.println("There are no meals in this restaurant");
         } else {
-            consolePrinter.print("Meals in restaurant \"" + restaurant.name + "\":");
+            System.out.println("Meals in restaurant \"" + restaurant.name + "\":");
             meals.addAll(restaurant.meals);
         }
-        consolePrinter.print(meals.toString());
+        System.out.println(meals);
         return meals;
     }
 
     String changeRestaurantName() {
-        consolePrinter.print("Please type restaurant ID, which you would like to change a name in \n(below you can see all restaurants):");
+        System.out.println("Please type restaurant ID, which you would like to change a name in \n(below you can see all restaurants):");
         consolePrinter.printAllRestaurants();
         UUID restaurantId = getValidRestaurantId();
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
-        consolePrinter.print("Please type a new name for the restaurant currently called \"" + restaurant.name + "\"");
+        System.out.println("Please type a new name for the restaurant currently called \"" + restaurant.name + "\"");
         restaurant.name = scanner.nextLine();
-        consolePrinter.print("Name succesfully changed to " + restaurant.name);
+        System.out.println("Name succesfully changed to " + restaurant.name);
         return restaurant.name;
     }
 
@@ -105,16 +98,16 @@ public class RestaurantProcessor {
         UUID restaurantId;
         while (true) {
             try {
-                consolePrinter.print("Please enter the ID of the restaurant:");
+                System.out.println("Please enter the ID of the restaurant:");
                 restaurantId = UUID.fromString(scanner.nextLine());
                 Restaurant restaurant = restaurantRepository.getById(restaurantId);
                 if (restaurant != null) {
                     return restaurantId;
                 } else {
-                    consolePrinter.print("Restaurant not found. Please enter a valid restaurant ID.");
+                    System.out.println("Restaurant not found. Please enter a valid restaurant ID.");
                 }
             } catch (IllegalArgumentException e) {
-                consolePrinter.print("Invalid restaurant ID format. Please enter a valid UUID.");
+                System.out.println("Invalid restaurant ID format. Please enter a valid UUID.");
             }
         }
     }
@@ -125,7 +118,7 @@ public class RestaurantProcessor {
             try {
                 return Double.parseDouble(input);
             } catch (NumberFormatException e) {
-                consolePrinter.print("Invalid price input, please try again");
+                System.out.println("Invalid price input, please try again");
                 input = scanner.nextLine();
             }
         }

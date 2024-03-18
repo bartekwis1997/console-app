@@ -1,4 +1,4 @@
-package restaurant.model;
+package restaurant;
 
 
 import java.util.UUID;

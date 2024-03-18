@@ -1,18 +1,11 @@
-package restaurant.io;
-
-import restaurant.repository.RestaurantRepository;
-import restaurant.model.Restaurant;
+package restaurant;
 
 public class ConsolePrinter {
+    
     RestaurantRepository restaurantRepository;
 
     public ConsolePrinter(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-    }
-
-    public String print(String message) {
-        System.out.println(message);
-        return message;
     }
 
     public String printAppMenu() {
@@ -31,7 +24,7 @@ public class ConsolePrinter {
         for (Restaurant restaurant : restaurantRepository.restaurants) {
             allRestaurants += restaurant + "\n";
         }
-        print(allRestaurants);
+        System.out.println(allRestaurants);
         return allRestaurants;
     }
 

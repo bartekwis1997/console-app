@@ -1,10 +1,4 @@
-package restaurant.main;
-
-import restaurant.io.ConsolePrinter;
-import restaurant.logic.RestaurantManager;
-import restaurant.logic.RestaurantProcessor;
-import restaurant.repository.RestaurantRepository;
-import restaurant.util.JSONGenerator;
+package restaurant;
 
 import java.util.Scanner;
 

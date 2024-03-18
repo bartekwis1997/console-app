@@ -1,8 +1,9 @@
-package restaurant.model;
+package restaurant;
 
 import java.util.Scanner;
 
 public enum RestaurantType {
+    
     ASIAN,
     ITALIAN,
     FRENCH,
