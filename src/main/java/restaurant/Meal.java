@@ -15,6 +15,10 @@ public class Meal {
         this.id = id;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
     public String getName() {
         return name;
     }

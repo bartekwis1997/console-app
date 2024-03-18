@@ -23,7 +23,7 @@ public class RestaurantProcessor {
         return dumpedRestaurants;
     }
 
-    public String createRestaurant() {
+    public Restaurant createRestaurant() {
         UUID restaurantId = UUID.randomUUID();
 
         System.out.println("Please type restaurant name:");
@@ -35,9 +35,9 @@ public class RestaurantProcessor {
         System.out.println("Please type restaurant type (ASIAN, ITALIAN, FRENCH, AMERICAN):");
         RestaurantType restaurantType = RestaurantType.getValidInput(scanner);
 
+        System.out.println("Restaurant created: ");
         restaurantRepository.create(new Restaurant(restaurantId, restaurantName, restaurantAddress, restaurantType));
-
-        return String.format("Restaurant with ID %s has been created", restaurantId);
+        return new Restaurant(restaurantId, restaurantName, restaurantAddress, restaurantType);
     }
 
     public Meal addMealToRestaurant() {
@@ -83,7 +83,7 @@ public class RestaurantProcessor {
         return meals;
     }
 
-    String changeRestaurantName() {
+    public String changeRestaurantName() {
         System.out.println("Please type restaurant ID, which you would like to change a name in \n(below you can see all restaurants):");
         consolePrinter.printAllRestaurants();
         UUID restaurantId = getValidRestaurantId();
